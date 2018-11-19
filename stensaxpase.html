@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <style>
+    .box{
+      margin: 4px;
+      float: right;
+      width: 20%;
+      height: 29vh;
+      background-color: brown;
+    }
+    #sten{
+      width: 90%;
+      height: 28vh;
+    }
+    #pase{
+      width: 90%;
+      height: 28vh;
+    }
+    #sax{
+      width: 90%;
+      height: 28vh;
+    }
+    #resultat{
+      float: left;
+      width: 20%;
+      height: 40vh;
+      border: 2px solid black;
+    }
+    </style>
+  </head>
+  <body>
+    <!--Knapparna för sten sax och påse, knapparna har id efter vilken av the tree alternativerna dem tillhör-->
+    <button class="box"><img id="sten" onclick="start('sten')" src="https://dustinweb.azureedge.net/image/47996/400/320/fiskars-sax-classic-universal-hoger-210mm.jpg"></button>
+    <button class="box"><img id="pase" onclick="start('påse')" src="https://maklarvarlden.se/wp-content/uploads/p%C3%A5se1.jpg"></button>
+    <button class="box"><img id="sax"  onclick="start('sax')" src="https://figurgrossisten.se/image/cache/data/fiberglass/dekorationer/sten-dekoration-figur-tradgardsmobler-3497-500x500.jpg"></button>
+
+  <!--denna div är för resultat rutan på vänstra sidan av hemsidan-->
+  <div id="resultat">
+    <!--<p> och <h1> är för att skriva ut texten som kommer att stå i plats av <span> som fungerar som en "placeholder"-->
+    <p><span id="spelare"></span><span id="datorn"></span></p>
+    <h1><span id="svar"></span></h1>
+  </div>
+
+  <!--detta är dem olika ljud filerna som kommer fram beroende på om du vinner, förlorar eller det blir oavgjort-->
+  <audio id="win">
+    <source src="joseph-joestar-nice.mp3">
+  </audio>
+  <audio id="lose">
+    <source src="mudamudamudamudamudamudamudamudamudamuda.mp3">
+  </audio>
+  <audio id="tie">
+    <source src="dio-wryyy.mp3">
+  </audio>
+
+  </audio>
+    <script>
+    var start = function(choice){
+
+      document.getElementById("spelare").innerHTML="";
+      document.getElementById("datorn").innerHTML="";
+      document.getElementById("svar").innerHTML="";
+
+      if (choice == "sten" || choice == "påse" || choice == "sax") {
+        document.getElementById("spelare").innerHTML='Du valde' + ' ' + choice + '.';
+      }
+
+      var computer = Math.random();
+					if (computer < 0.34) {
+						computer = "sten";
+					} else if(computer <= 0.67) {
+						computer = "påse";
+					} else {
+						computer = "sax";
+					}
+      document.getElementById("datorn").innerHTML=' datorn valde' + ' ' + computer + '.';
+
+      var compare = function (a,b) {
+						if (a == b) {
+              tie.play();
+							return "oavgjort";
+						} else if (a == "sten"){
+							if (b =="sax") {
+                win.play();
+								return "spelare van.";
+							} else {
+                lose.play();
+								return "datorn van.";
+							}
+						} else if (a == "påse") {
+							if (b == "sten") {
+                win.play();
+								return "spelare van.";
+							} else {
+                lose.play();
+								return "datorn van.";
+							}
+						} else if (a == "sax") {
+							if (b == "sten") {
+                lose.play();
+								return "datorn van.";
+							} else {
+                win.play();
+								return "spelare van.";
+							}
+            }
+          }
+          var vinnare = compare(choice,computer);
+          document.getElementById("svar").innerHTML=vinnare;
+        }
+    </script>
+  </body>
+</html>
